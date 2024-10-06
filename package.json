@@ -1,23 +1,17 @@
 {
-  "name": "react-app",
-  "version": "0.1.0",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "start": "nodemon index.js",
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@types/node": "^22.7.4",
-    "nodemon": "^3.1.7",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.6.2"
+    "name": "react.dev",
+    "version": "0.0.0",
+    "main": "/src/index.js",
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test --env=jsdom",
+      "eject": "react-scripts eject"
+    },
+    "dependencies": {
+      "react": "^18.0.0",
+      "react-dom": "^18.0.0",
+      "react-scripts": "^5.0.0"
+    },
+    "devDependencies": {}
   }
-}
