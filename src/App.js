@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Tree, Input, Button, Modal, Form, message } from 'antd';
 import { PlusOutlined, DeleteOutlined, BarChartOutlined } from '@ant-design/icons';
 import { Chart, registerables } from 'chart.js';
-import './App.css';
+import './styles.css';
 
 Chart.register(...registerables);
 
