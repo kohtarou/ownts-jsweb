@@ -14,66 +14,26 @@
         <div id="years">
             <!-- 年のコンテナ -->
         </div>
-        <button onclick="addYear()">年を追加</button>
+        <select id="yearSelect">
+            ${Array.from({ length: 7 }, (_, i) => `<option value="${2024 + i}">${2024 + i}年</option>`).join('')}
+        </select>
+        <button id="addYearButton">年を追加</button>
     </div>
 
-    <script>
+    <script type="module">
+        import { addYearElement } from './index.js';
+
         const yearsContainer = document.getElementById('years');
         const initialYears = [2024, 2025];
 
         // 初期の年を追加
-        initialYears.forEach(year => addYearElement(year));
+        initialYears.forEach(year => addYearElement(yearsContainer, year));
 
-        function addYear() {
-            const newYear = prompt("追加する年を入力してください:");
-            if (newYear) {
-                addYearElement(newYear);
-            }
-        }
-
-        function addYearElement(year) {
-            const yearDiv = document.createElement('div');
-            yearDiv.className = 'year';
-            yearDiv.innerHTML = `
-                <h2>${year}</h2>
-                <div class="months">
-                    <!-- 月のコンテナ -->
-                </div>
-                <button onclick="addMonth(this, ${year})">月を追加</button>
-            `;
-            yearsContainer.appendChild(yearDiv);
-        }
-
-        function addMonth(button, year) {
-            const monthContainer = button.previousElementSibling;
-            const newMonth = prompt("追加する月を入力してください (1-12):");
-            if (newMonth && newMonth >= 1 && newMonth <= 12) {
-                const monthDiv = document.createElement('div');
-                monthDiv.className = 'month';
-                monthDiv.innerHTML = `
-                    <h3>${newMonth}月</h3>
-                    <div class="days">
-                        <!-- 日のコンテナ -->
-                    </div>
-                    <button onclick="addDay(this, ${year}, ${newMonth})">日を追加</button>
-                `;
-                monthContainer.appendChild(monthDiv);
-            }
-        }
-
-        function addDay(button, year, month) {
-            const dayContainer = button.previousElementSibling;
-            const newDay = prompt("追加する日を入力してください:");
-            if (newDay) {
-                const dayDiv = document.createElement('div');
-                dayDiv.className = 'day';
-                dayDiv.innerHTML = `
-                    <p>${newDay}日: <input type="number" placeholder="ダイヤ数" /></p>
-                `;
-                dayContainer.appendChild(dayDiv);
-            }
-        }
+        document.getElementById('addYearButton').addEventListener('click', () => {
+            const yearSelect = document.getElementById('yearSelect');
+            const newYear = yearSelect.value;
+            addYearElement(yearsContainer, newYear);
+        });
     </script>
-
 </body>
 </html>
