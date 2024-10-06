@@ -14,7 +14,6 @@
         <div id="years">
             <!-- 年のコンテナ -->
         </div>
-        <select id="yearSelect"></select>
         <button id="addYearButton">年を追加</button>
     </div>
 
@@ -22,23 +21,30 @@
         import { addYearElement } from './index.js';
 
         const yearsContainer = document.getElementById('years');
-        const yearSelect = document.getElementById('yearSelect');
         const initialYears = [2024, 2025];
-
-        // 年の選択肢を生成
-        for (let i = 0; i < 7; i++) {
-            const option = document.createElement('option');
-            option.value = 2024 + i;
-            option.textContent = `${2024 + i}年`;
-            yearSelect.appendChild(option);
-        }
 
         // 初期の年を追加
         initialYears.forEach(year => addYearElement(yearsContainer, year));
 
         document.getElementById('addYearButton').addEventListener('click', () => {
-            const newYear = yearSelect.value;
-            addYearElement(yearsContainer, newYear);
+            const yearSelect = document.createElement('select');
+            yearSelect.id = 'yearSelect';
+            for (let i = 0; i < 7; i++) {
+                const option = document.createElement('option');
+                option.value = 2024 + i;
+                option.textContent = `${2024 + i}年`;
+                yearSelect.appendChild(option);
+            }
+            const addButton = document.createElement('button');
+            addButton.textContent = '追加';
+            addButton.addEventListener('click', () => {
+                const newYear = yearSelect.value;
+                addYearElement(yearsContainer, newYear);
+                yearSelect.remove();
+                addButton.remove();
+            });
+            document.body.appendChild(yearSelect);
+            document.body.appendChild(addButton);
         });
     </script>
 </body>

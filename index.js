@@ -1,27 +1,42 @@
 // index.js
 export function addYearElement(yearsContainer, year) {
+  // 既に同じ年が存在するか確認
+  if (document.querySelector(`.year[data-year="${year}"]`)) {
+    alert(`${year}年は既に追加されています。`);
+    return;
+  }
+
   const yearDiv = document.createElement('div');
   yearDiv.className = 'year';
+  yearDiv.setAttribute('data-year', year);
   yearDiv.innerHTML = `
       <h2>${year}</h2>
       <div class="months">
           <!-- 月のコンテナ -->
       </div>
-      <select class="month-select">
-          ${Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">${i + 1}月</option>`).join('')}
-      </select>
       <button class="addMonthButton">月を追加</button>
   `;
   yearsContainer.appendChild(yearDiv);
 
   // 月を追加するボタンにイベントリスナーを追加
   yearDiv.querySelector('.addMonthButton').addEventListener('click', () => {
-    addMonth(yearDiv.querySelector('.month-select'), year);
+    const monthSelect = document.createElement('select');
+    monthSelect.className = 'month-select';
+    monthSelect.innerHTML = Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">${i + 1}月</option>`).join('');
+    const addButton = document.createElement('button');
+    addButton.textContent = '追加';
+    addButton.addEventListener('click', () => {
+      addMonth(monthSelect, year);
+      monthSelect.remove();
+      addButton.remove();
+    });
+    yearDiv.appendChild(monthSelect);
+    yearDiv.appendChild(addButton);
   });
 }
 
 export function addMonth(monthSelect, year) {
-  const monthContainer = monthSelect.nextElementSibling;
+  const monthContainer = monthSelect.previousElementSibling;
   const newMonth = monthSelect.value;
   const existingMonths = Array.from(monthContainer.children);
   const monthDiv = document.createElement('div');
