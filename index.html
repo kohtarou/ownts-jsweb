@@ -27,6 +27,12 @@
         initialYears.forEach(year => addYearElement(yearsContainer, year));
 
         document.getElementById('addYearButton').addEventListener('click', () => {
+            // 既に表示されているドロップダウンとボタンを削除
+            const existingSelect = document.getElementById('yearSelect');
+            const existingButton = document.getElementById('addYearConfirmButton');
+            if (existingSelect) existingSelect.remove();
+            if (existingButton) existingButton.remove();
+
             const yearSelect = document.createElement('select');
             yearSelect.id = 'yearSelect';
             for (let i = 0; i < 7; i++) {
@@ -37,6 +43,7 @@
             }
             const addButton = document.createElement('button');
             addButton.textContent = '追加';
+            addButton.id = 'addYearConfirmButton';
             addButton.addEventListener('click', () => {
                 const newYear = yearSelect.value;
                 addYearElement(yearsContainer, newYear);

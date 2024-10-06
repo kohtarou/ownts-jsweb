@@ -20,11 +20,18 @@ export function addYearElement(yearsContainer, year) {
 
   // 月を追加するボタンにイベントリスナーを追加
   yearDiv.querySelector('.addMonthButton').addEventListener('click', () => {
+    // 既に表示されているドロップダウンとボタンを削除
+    const existingSelect = yearDiv.querySelector('.month-select');
+    const existingButton = yearDiv.querySelector('.addMonthConfirmButton');
+    if (existingSelect) existingSelect.remove();
+    if (existingButton) existingButton.remove();
+
     const monthSelect = document.createElement('select');
     monthSelect.className = 'month-select';
     monthSelect.innerHTML = Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">${i + 1}月</option>`).join('');
     const addButton = document.createElement('button');
     addButton.textContent = '追加';
+    addButton.className = 'addMonthConfirmButton';
     addButton.addEventListener('click', () => {
       addMonth(monthSelect, year);
       monthSelect.remove();
@@ -36,7 +43,7 @@ export function addYearElement(yearsContainer, year) {
 }
 
 export function addMonth(monthSelect, year) {
-  const monthContainer = monthSelect.previousElementSibling;
+  const monthContainer = monthSelect.previousElementSibling.previousElementSibling;
   const newMonth = monthSelect.value;
   const existingMonths = Array.from(monthContainer.children);
   const monthDiv = document.createElement('div');
