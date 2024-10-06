@@ -4,55 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ダイヤ獲得カレンダー</title>
-    <link rel="stylesheet" href="main.css">
-    <script type="text/javascript">
-      // Single Page Apps for GitHub Pages
-      // MIT License
-      // https://github.com/rafgraph/spa-github-pages
-      // This script takes the current url and converts the path and query
-      // string into just a query string, and then redirects the browser
-      // to the new url with only a query string and hash fragment,
-      // e.g. https://www.foo.tld/one/two?a=b&c=d#qwe, becomes
-      // https://www.foo.tld/?/one/two&a=b~and~c=d#qwe
-      // Note: this 404.html file must be at least 512 bytes for it to work
-      // with Internet Explorer (it is currently > 512 bytes)
-
-      // If you're creating a Project Pages site and NOT using a custom domain,
-      // then set pathSegmentsToKeep to 1 (enterprise users may need to set it to > 1).
-      // This way the code will only replace the route part of the path, and not
-      // the real directory in which the app resides, for example:
-      // https://username.github.io/repo-name/one/two?a=b&c=d#qwe becomes
-      // https://username.github.io/repo-name/?/one/two&a=b~and~c=d#qwe
-      // Otherwise, leave pathSegmentsToKeep as 0.
-
-      /*
-      var pathSegmentsToKeep = 1;
-
-      var l = window.location;
-      l.replace(
-        l.protocol +
-          "//" +
-          l.hostname +
-          (l.port ? ":" + l.port : "") +
-          l.pathname
-            .split("/")
-            .slice(0, 1 + pathSegmentsToKeep)
-            .join("/") +
-          "/?/" +
-          l.pathname
-            .slice(1)
-            .split("/")
-            .slice(pathSegmentsToKeep)
-            .join("/")
-            .replace(/&/g, "~and~") +
-          (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
-          l.hash
-      );
-      */
-    </script>
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <script type="module" crossorigin src="index.js"></script>
+    <link rel="stylesheet" crossorigin href="main.css">
 </head>
 <body>
-    <div id="root"></div>
-    <script src="index.js"></script>
+    <div id="calendar">
+        <h1>ダイヤ獲得カレンダー</h1>
+        <div id="years">
+            <!-- 年のコンテナ -->
+        </div>
+        <button onclick="addYear()">年を追加</button>
+    </div>
+
+    <script>
+        const yearsContainer = document.getElementById('years');
+        const initialYears = [2024, 2025];
+
+        // 初期の年を追加
+        initialYears.forEach(year => addYearElement(year));
+
+        function addYear() {
+            const newYear = prompt("追加する年を入力してください:");
+            if (newYear) {
+                addYearElement(newYear);
+            }
+        }
+
+        function addYearElement(year) {
+            const yearDiv = document.createElement('div');
+            yearDiv.className = 'year';
+            yearDiv.innerHTML = `
+                <h2>${year}</h2>
+                <div class="months">
+                    <!-- 月のコンテナ -->
+                </div>
+                <button onclick="addMonth(this, ${year})">月を追加</button>
+            `;
+            yearsContainer.appendChild(yearDiv);
+        }
+
+        function addMonth(button, year) {
+            const monthContainer = button.previousElementSibling;
+            const newMonth = prompt("追加する月を入力してください (1-12):");
+            if (newMonth && newMonth >= 1 && newMonth <= 12) {
+                const monthDiv = document.createElement('div');
+                monthDiv.className = 'month';
+                monthDiv.innerHTML = `
+                    <h3>${newMonth}月</h3>
+                    <div class="days">
+                        <!-- 日のコンテナ -->
+                    </div>
+                    <button onclick="addDay(this, ${year}, ${newMonth})">日を追加</button>
+                `;
+                monthContainer.appendChild(monthDiv);
+            }
+        }
+
+        function addDay(button, year, month) {
+            const dayContainer = button.previousElementSibling;
+            const newDay = prompt("追加する日を入力してください:");
+            if (newDay) {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'day';
+                dayDiv.innerHTML = `
+                    <p>${newDay}日: <input type="number" placeholder="ダイヤ数" /></p>
+                `;
+                dayContainer.appendChild(dayDiv);
+            }
+        }
+    </script>
+
 </body>
 </html>
