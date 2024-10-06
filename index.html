@@ -4,11 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <!-- ReactとReactDOMのCDNを追加 -->
+  <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+  <!-- Babelを追加してJSXを変換 -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Ant DesignのCSSを追加 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.16.13/antd.min.css" />
 </head>
-<body>    
-    <canvas id="myChart" width="400" height="200"></canvas>
-    <script src="src/App.js"></script>
-
+<body>
     <div id="root"></div>
+    <canvas id="myChart" width="400" height="200"></canvas>
+    <!-- App.jsをBabelで変換して読み込む -->
+    <script type="text/babel" src="src/App.js"></script>
 </body>
 </html>
