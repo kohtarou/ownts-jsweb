@@ -10,15 +10,20 @@ export function addYearElement(yearsContainer, year) {
       <select class="month-select">
           ${Array.from({ length: 12 }, (_, i) => `<option value="${i + 1}">${i + 1}月</option>`).join('')}
       </select>
-      <button onclick="addMonth(this, ${year})">月を追加</button>
+      <button class="addMonthButton">月を追加</button>
   `;
   yearsContainer.appendChild(yearDiv);
+
+  // 月を追加するボタンにイベントリスナーを追加
+  yearDiv.querySelector('.addMonthButton').addEventListener('click', () => {
+    addMonth(yearDiv.querySelector('.month-select'), year);
+  });
 }
 
-export function addMonth(button, year) {
-  const monthContainer = button.previousElementSibling.previousElementSibling;
-  const newMonth = monthContainer.value;
-  const existingMonths = Array.from(monthContainer.nextElementSibling.children);
+export function addMonth(monthSelect, year) {
+  const monthContainer = monthSelect.nextElementSibling;
+  const newMonth = monthSelect.value;
+  const existingMonths = Array.from(monthContainer.children);
   const monthDiv = document.createElement('div');
   monthDiv.className = 'month';
   monthDiv.innerHTML = `
@@ -27,14 +32,14 @@ export function addMonth(button, year) {
           <!-- 日のコンテナ -->
       </div>
   `;
-  monthContainer.nextElementSibling.appendChild(monthDiv);
+  monthContainer.appendChild(monthDiv);
 
   // 月を昇順にソート
   const sortedMonths = [...existingMonths, monthDiv].sort((a, b) => {
       return parseInt(a.querySelector('h3').textContent) - parseInt(b.querySelector('h3').textContent);
   });
-  monthContainer.nextElementSibling.innerHTML = '';
-  sortedMonths.forEach(month => monthContainer.nextElementSibling.appendChild(month));
+  monthContainer.innerHTML = '';
+  sortedMonths.forEach(month => monthContainer.appendChild(month));
 
   // 日を自動で追加
   addDays(monthDiv.querySelector('.days'), year, newMonth);
