@@ -1,58 +1,81 @@
 <!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ダイヤ獲得カレンダー</title>
-    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <script type="module" crossorigin src="index.js"></script>
-    <link rel="stylesheet" crossorigin href="main.css">
-</head>
-<body>
-    <div id="calendar">
-        <h1>ダイヤ獲得カレンダー</h1>
-        <div id="years">
-            <!-- 年のコンテナ -->
-        </div>
-        <button id="addYearButton">年を追加</button>
-    </div>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Single Page Apps for GitHub Pages</title>
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      // This script takes the current url and converts the path and query
+      // string into just a query string, and then redirects the browser
+      // to the new url with only a query string and hash fragment,
+      // e.g. https://www.foo.tld/one/two?a=b&c=d#qwe, becomes
+      // https://www.foo.tld/?/one/two&a=b~and~c=d#qwe
+      // Note: this 404.html file must be at least 512 bytes for it to work
+      // with Internet Explorer (it is currently > 512 bytes)
 
-    <script type="module">
-        import { addYearElement } from './index.js';
+      // If you're creating a Project Pages site and NOT using a custom domain,
+      // then set pathSegmentsToKeep to 1 (enterprise users may need to set it to > 1).
+      // This way the code will only replace the route part of the path, and not
+      // the real directory in which the app resides, for example:
+      // https://username.github.io/repo-name/one/two?a=b&c=d#qwe becomes
+      // https://username.github.io/repo-name/?/one/two&a=b~and~c=d#qwe
+      // Otherwise, leave pathSegmentsToKeep as 0.
+      var pathSegmentsToKeep = 1;
 
-        const yearsContainer = document.getElementById('years');
-        const initialYears = [2024, 2025];
-
-        // 初期の年を追加
-        initialYears.forEach(year => addYearElement(yearsContainer, year));
-
-        document.getElementById('addYearButton').addEventListener('click', () => {
-            // 既に表示されているドロップダウンとボタンを削除
-            const existingSelect = document.getElementById('yearSelect');
-            const existingButton = document.getElementById('addYearConfirmButton');
-            if (existingSelect) existingSelect.remove();
-            if (existingButton) existingButton.remove();
-
-            const yearSelect = document.createElement('select');
-            yearSelect.id = 'yearSelect';
-            for (let i = 0; i < 7; i++) {
-                const option = document.createElement('option');
-                option.value = 2024 + i;
-                option.textContent = `${2024 + i}年`;
-                yearSelect.appendChild(option);
-            }
-            const addButton = document.createElement('button');
-            addButton.textContent = '追加';
-            addButton.id = 'addYearConfirmButton';
-            addButton.addEventListener('click', () => {
-                const newYear = yearSelect.value;
-                addYearElement(yearsContainer, newYear);
-                yearSelect.remove();
-                addButton.remove();
-            });
-            document.body.appendChild(yearSelect);
-            document.body.appendChild(addButton);
-        });
+      var l = window.location;
+      l.replace(
+        l.protocol +
+          "//" +
+          l.hostname +
+          (l.port ? ":" + l.port : "") +
+          l.pathname
+            .split("/")
+            .slice(0, 1 + pathSegmentsToKeep)
+            .join("/") +
+          "/?/" +
+          l.pathname
+            .slice(1)
+            .split("/")
+            .slice(pathSegmentsToKeep)
+            .join("/")
+            .replace(/&/g, "~and~") +
+          (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+          l.hash
+      );
     </script>
-</body>
+  </head>
+  <body></body>
 </html>
+<!-- <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting</title>
+    <script type="text/javascript">
+      var segmentCount = 1;
+      var l = window.location;
+      l.replace(
+        l.protocol +
+          "//" +
+          l.hostname +
+          (l.port ? ":" + l.port : "") +
+          l.pathname
+            .split("/")
+            .slice(0, 1 + segmentCount)
+            .join("/") +
+          "/?p=/" +
+          l.pathname
+            .slice(1)
+            .split("/")
+            .slice(segmentCount)
+            .join("/")
+            .replace(/&/g, "~and~") +
+          (l.search ? "&q=" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+          l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html> -->
